@@ -19,7 +19,7 @@ from envparse import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ENV_PATH = BASE_DIR.joinpath('todolist/.env')
+ENV_PATH = BASE_DIR.joinpath('.env')
 
 if ENV_PATH.exists() and ENV_PATH.is_file():
     env.read_envfile(ENV_PATH)
@@ -95,7 +95,6 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = env.str('DATABASE_URL')
 
 
 # Password validation
@@ -133,6 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR.joinpath('static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -141,41 +141,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
 
-# LOGGING: dict[str, Any] = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'health-check': {
-#             '()': 'todolist.filters.HealthCheckFilter',
-#         },
-#     },
-#     'formatters': {
-#         'console': {
-#             'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(message)s',
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'console',
-#             'filters': ['health-check'],
-#         },
-#         'null': {'class': 'logging.NullHandler'},
-#     },
-#     'loggers': {
-#         '': {
-#             'level': 'DEBUG' if DEBUG else 'INFO',
-#             'handlers': ['console'],
-#         },
-#         'django.server': {'handlers': ['null']},
-#     },
-# }
-# if env.bool('SQL_ECHO', default=False):
-#     LOGGING['loggers'].update({
-#         'django.db': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#             'propagate': False
-#         }
-#     })
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
+
 

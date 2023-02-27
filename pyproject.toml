@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "todolist"
+version = "0.1.0"
+description = ""
+authors = ["painassasin <painassasin@icloud.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.1"
+envparse = "^0.2.0"
+psycopg2-binary = "^2.9.3"
+djangorestframework = "^3.14.0"
+social-auth-app-django = "^5.0.0"
+django-filter = "^22.1"
+gunicorn = "^20.1.0"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^2.20.0"
+djangorestframework-stubs = "^1.8.0"
+django-stubs = { version = "^1.13.1", extras = ["compatible-mypy"] }
+pytest-django = "^4.5.2"
+pytest-faker = "^2.0.0"
+ipython = "^8.7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+py_version = 310
+known_first_party = ["todolist"]
+profile = "django"
+line_length = 120
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+show_error_codes = true
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+[tool.django-stubs]
+django_settings_module = "todolist.settings"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "todolist.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+
+[tool.coverage.report]
+omit = [
+    "todolist/asgi.py",
+    "todolist/wsgi.py",
+    "todolist/settings.py",
+    "todolist/[a-zA-Z]*/(migrations)/(.)*",
+]
+
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "def __str__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:"
+]
